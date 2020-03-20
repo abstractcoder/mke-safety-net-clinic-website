@@ -1,0 +1,13 @@
+<div class="card my-4">
+  <div class="card-body">
+    <h5 class="card-title"><%= title %></h5>
+    <p class="card-text" style="max-height: 200px; overflow-y: scroll;">
+      <% sort_hash(data).each do |service, ids| %>
+        <label class="d-block">
+          <input type="checkbox" />
+          <%= service %> (<%= ids.count %>)
+        </label>
+      <% end %>
+    </p>
+  </div>
+</div>
