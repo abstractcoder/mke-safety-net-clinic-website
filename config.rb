@@ -101,10 +101,12 @@ services.each do |service, ids|
     "/services/#{service.parameterize}/index.html",
     "/service.html",
     locals: {
-      clinic_data: clinic_data.select { |row|
+      title: service,
+      clinics: clinic_data.select { |row|
         ids.include? row["Id"]
       }
     },
+    ignore: true
   )
 end
 

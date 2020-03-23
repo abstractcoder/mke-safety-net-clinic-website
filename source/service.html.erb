@@ -1,3 +1,5 @@
+<% content_for(:title, title) %>
+
 <div class="container">
   <div class="row">
     <div class="col-sm-4">
@@ -7,7 +9,7 @@
       <%= partial "_filter", locals: { title: "Population Served", data: populations_served(clinic_data) } %>
     </div>
     <div class="col-sm-8 services my-4">
-      <% clinic_data.each do |clinic| %>
+      <% clinics.each do |clinic| %>
         <div class="card mb-4" data-clinic-id="<%= clinic["Id"] %>">
           <div class="card-body">
             <button class="btn btn-secondary stretched-link dropdown-toggle float-right" data-target="#clinic-<%= clinic["Id"] %>" data-toggle="collapse">
