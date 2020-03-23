@@ -3,10 +3,10 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-4">
-      <% #partial "_filter", locals: { title: "Services", data: services(clinic_data) } %>
-      <%= partial "_filter", locals: { title: "Languages", data: languages(clinic_data) } %>
-      <%= partial "_filter", locals: { title: "Bus Routes", data: bus_routes(clinic_data) } %>
-      <%= partial "_filter", locals: { title: "Population Served", data: populations_served(clinic_data) } %>
+      <% #partial "_filter", locals: { title: "Services", data: services(clinics) } %>
+      <%= partial "_filter", locals: { title: "Languages", data: languages(clinics) } %>
+      <%= partial "_filter", locals: { title: "Bus Routes", data: bus_routes(clinics) } %>
+      <%= partial "_filter", locals: { title: "Population Served", data: populations_served(clinics) } %>
     </div>
     <div class="col-sm-8 services my-4">
       <% clinics.each do |clinic| %>
