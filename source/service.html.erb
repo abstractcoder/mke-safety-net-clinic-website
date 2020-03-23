@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <% #partial "_filter", locals: { title: "Services", data: services(clinic_data) } %>
+      <%= partial "_filter", locals: { title: "Languages", data: languages(clinic_data) } %>
+      <%= partial "_filter", locals: { title: "Bus Routes", data: bus_routes(clinic_data) } %>
+      <%= partial "_filter", locals: { title: "Population Served", data: populations_served(clinic_data) } %>
+    </div>
+    <div class="col-sm-8 services my-4">
+      <% clinic_data.each do |clinic| %>
+        <div class="card mb-4" data-clinic-id="<%= clinic["Id"] %>">
+          <div class="card-body">
+            <button class="btn btn-secondary stretched-link dropdown-toggle float-right" data-target="#clinic-<%= clinic["Id"] %>" data-toggle="collapse">
+              More Info
+            </button>
+
+            <h5 class="card-title">
+              <%= p clinic["Clinic"] %>
+            </h5>
+            <p class="card-text"><%= p clinic["Service Description"] %></p>
+            <p class="card-text"><%= p clinic["Address"] %></p>
+
+            <div id="clinic-<%= clinic["Id"] %>" class="collapse">
+              <p class="card-text"><%= p clinic["Cross Streets"] %></p>
+              <p class="card-text"><%= p clinic["Bus Route"] %></p>
+              <!--  <p class="card-text"><%= p clinic["Fax"] %></p> %> -->
+              <p class="card-text"><%= p clinic["Phone Number"] %></p>
+              <p class="card-text"><%= p clinic["Email Address"] %></p>
+              <p class="card-text"><%= pp clinic["Hours"] %></p>
+
+              <p class="card-text"><%= p clinic["Language"] %></p>
+              <p class="card-text"><%= p clinic["Patient Eligibility"] %></p>
+              <p class="card-text"><%= p clinic["Special Populations Served"] %></p>
+              <p class="card-text"><%= p clinic["Payer Population Served"] %></p>
+              <p class="card-text"><%= p clinic["Payment Practices"] %></p>
+              <p class="card-text"><%= p clinic["Required Documents"] %></p>
+              <p class="card-text"><%= p clinic["Clinical Services"] %></p>
+              <p class="card-text"><%= p clinic["Routine Services"] %></p>
+              <p class="card-text"><%= p clinic["Clinic Type"] %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

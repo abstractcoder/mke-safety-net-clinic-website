@@ -1,11 +1,14 @@
 <div class="card my-4">
   <div class="card-body">
-    <h5 class="card-title"><%= title %></h5>
-    <p class="card-text" style="max-height: 200px; overflow-y: scroll;">
+    <h5 class="card-title m-0 dropdown-toggle" data-toggle="collapse" data-target="#<%= title.parameterize%>">
+      <%= title %>
+    </h5>
+    <p id="<%= title.parameterize%>" class="card-text collapse mt-2" style="max-height: 200px; overflow-y: scroll;">
       <% sort_hash(data).each do |service, ids| %>
         <label class="d-block">
-          <input type="checkbox" />
-          <%= service %> (<%= ids.count %>)
+          <input type="checkbox" value='<%= ids.to_json %>' />
+          <%= service %>
+          <!-- (<%= ids.count %>) -->
         </label>
       <% end %>
     </p>

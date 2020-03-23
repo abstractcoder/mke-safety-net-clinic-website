@@ -1,38 +1,13 @@
 <div class="container">
-  <div class="row">
-    <div class="col-4">
-      <%= partial "_filter", locals: { title: "Services", data: services } %>
-      <%= partial "_filter", locals: { title: "Languages", data: languages } %>
-      <%= partial "_filter", locals: { title: "Bus Routes", data: bus_routes } %>
-      <%= partial "_filter", locals: { title: "Population Served", data: populations_served } %>
-    </div>
+  <div class="row justify-content-center mt-4">
     <div class="col-8">
-      <% clinic_data.each do |clinic| %>
-        <div class="card my-4">
-          <div class="card-body">
-            <h5 class="card-title">
-              <%= p clinic["Clinic"] %>
-            </h5>
-            <p class="card-text"><%= p clinic["Service Description"] %></p>
-            <p class="card-text"><%= p clinic["Address"] %></p>
-            <p class="card-text"><%= p clinic["Cross Streets"] %></p>
-            <p class="card-text"><%= p clinic["Bus Route"] %></p>
-            <!--  <p class="card-text"><%= p clinic["Fax"] %></p> %> -->
-            <p class="card-text"><%= p clinic["Phone Number"] %></p>
-            <p class="card-text"><%= p clinic["Email Address"] %></p>
-            <p class="card-text"><%= pp clinic["Hours"] %></p>
-
-            <p class="card-text"><%= p clinic["Language"] %></p>
-            <p class="card-text"><%= p clinic["Patient Eligibility"] %></p>
-            <p class="card-text"><%= p clinic["Special Populations Served"] %></p>
-            <p class="card-text"><%= p clinic["Payer Population Served"] %></p>
-            <p class="card-text"><%= p clinic["Payment Practices"] %></p>
-            <p class="card-text"><%= p clinic["Required Documents"] %></p>
-            <p class="card-text"><%= p clinic["Clinical Services"] %></p>
-            <p class="card-text"><%= p clinic["Routine Services"] %></p>
-            <p class="card-text"><%= p clinic["Clinic Type"] %></p>
-          </div>
-        </div>
+      <h3>Milwaukee County Safety Net Clinic</h3>
+      <p>Milwaukee County Safety Net Clinic is a project for creating a dynamic and search-enabled mobile website, which can help end users to find affordable clinics in Milwaukee County based on their health requirements, proximity to the clinic and temporal availability.</p>
+      <h5>Services Available</h5>
+      <% services.sort_by{|k,v| -v.count}.first(45).each do |service, ids| %>
+        <a href="/services/<%= service.parameterize %>" class="btn btn-link">
+          <%= service %> (<%= ids.count %>)
+        </a>
       <% end %>
     </div>
   </div>

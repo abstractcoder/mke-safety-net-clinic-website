@@ -16,17 +16,6 @@ page '/*.txt', layout: false
 # With alternative layout
 # page '/path/to/file.html', layout: 'other_layout'
 
-# Proxy pages
-# https://middlemanapp.com/advanced/dynamic-pages/
-
-# proxy(
-#   '/this-page-has-no-template.html',
-#   '/template-file.html',
-#   locals: {
-#     which_fake_page: 'Rendering a fake page with a local variable'
-#   },
-# )
-
 # Helpers
 # Methods defined in the helpers block are available in templates
 # https://middlemanapp.com/basics/helper-methods/
@@ -39,20 +28,20 @@ helpers do
     @clinic_data ||= CSV.parse(File.read("data/clinic_data.csv"), headers: true)
   end
 
-  def services
-    @services ||= create_hash_for_key(clinic_data, ["Clinical Services", "Routine Services"])
+  def services(data = clinic_data)
+    @services ||= create_hash_for_key(data, ["Clinical Services", "Routine Services"])
   end
 
-  def languages
-    @languages ||= create_hash_for_key(clinic_data, "Language")
+  def languages(data = clinic_data)
+    @languages ||= create_hash_for_key(data, "Language")
   end
 
-  def bus_routes
-    @bus_routes ||= create_hash_for_key(clinic_data, "Bus Route")
+  def bus_routes(data = clinic_data)
+    @bus_routes ||= create_hash_for_key(data, "Bus Route")
   end
 
-  def populations_served
-    @populations_served ||= create_hash_for_key(clinic_data, ["Payer Population Served", "Special Populations Served"])
+  def populations_served(data = clinic_data)
+    @populations_served ||= create_hash_for_key(data, ["Payer Population Served", "Special Populations Served"])
   end
 
   def sort_hash(hash)
@@ -70,16 +59,53 @@ helpers do
   def create_hash_for_key(data, keys)
     hash = Hash.new{|h,k| h[k] = []}
 
-    data.each_with_index do |row, index|
+    data.each do |row|
       [keys].flatten.each do |key|
         (row[key] || "").split(",").map(&:strip).compact.each do |service|
-          hash[service].push(index)
+          hash[service].push(row["Id"])
         end
       end
     end
 
     hash
   end
+end
+
+def create_hash_for_key(data, keys)
+  hash = Hash.new{|h,k| h[k] = []}
+
+  data.each_with_index do |row, index|
+    [keys].flatten.each do |key|
+      (row[key] || "").split(",").map(&:strip).compact.each do |service|
+        hash[service].push(row["Id"])
+      end
+    end
+  end
+
+  hash
+end
+
+def clinic_data
+  @clinic_data ||= CSV.parse(File.read("data/clinic_data.csv"), headers: true)
+end
+
+def services(data = clinic_data)
+  @services ||= create_hash_for_key(clinic_data, ["Clinical Services", "Routine Services"])
+end
+
+# Proxy pages
+# https://middlemanapp.com/advanced/dynamic-pages/
+
+services.each do |service, ids|
+  proxy(
+    "/services/#{service.parameterize}/index.html",
+    "/service.html",
+    locals: {
+      clinic_data: clinic_data.select { |row|
+        ids.include? row["Id"]
+      }
+    },
+  )
 end
 
 # Build-specific configuration
